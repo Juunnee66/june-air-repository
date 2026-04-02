@@ -1,0 +1,57 @@
+<!-- 마우스 이벤트 감지, 화살표 함수 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="box">마우스를 올려보세요</p>
+
+    <script>
+        // mouseover : 글씨를 orange 색으로 변경
+        // mouseout : 글씨를 black으로 되돌려줌
+
+        const box = document.querySelector("#box");
+        
+        // function changeColorToOrange() {
+        //     box.style.color = "orange";
+        // };
+
+        // function changeColorToBlack() {
+        //     box.style.color = "black";
+        // };
+
+        // box.addEventListener("mouseover", changeColorToOrange);
+        // box.addEventListener("mouseout", changeColorToBlack);
+
+        // -----------------------------------------
+        // //  함수정의하면서 사용가능
+        // box.addEventListener("mouseover", function(){
+        //     box.style.color = "orange";
+        // });
+        // box.addEventListener("mouseout", function(){
+        //     box.style.color = "black";
+        // });
+
+        // -----------------------------------------
+        //  함수이름없이, 중괄호 없이도 가능 : 화살표 함수, 함수내용2줄이면 중괄호 필요
+        // box.addEventListener("mouseover", () => {
+        //     box.style.fontSize = "30px"
+        //     box.style.color = "orange"});
+        // box.addEventListener("mouseout", () => box.style.color = "black");
+
+        // -----------------------------------------
+        // 화살표함수를 이용해서 함수쓰기->화살표없으면 그자리에서 실행되므로 undefined 됨
+        function changeColor(color) {
+            box.style.color = color;
+        };
+
+        box.addEventListener("mouseover", () => changeColor("orange"));
+        box.addEventListener("mouseout", () => changeColor("black"));
+
+
+    </script>
+</body>
+</html>
