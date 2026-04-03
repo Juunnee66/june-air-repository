@@ -1,0 +1,46 @@
+<!-- storage API : 잠깐 저장-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>LocalStorage</h1>
+    <input type="text" id="name" placeholder="이름 입력...">
+    <button id="save">저장</button>
+    <button id="save">리셋</button>
+    <p id="result"></p>
+
+    <script>
+        //한번 이름을 저장하면 브라우저를 다시열어도 이름이 유지되게하기
+        const input = document.querySelector("#name");
+        const button = document.querySelector("#save");
+        const resetButton = document.querySelector("#save")
+        const result = document.querySelector("#result");
+
+        // DOM 그릴때 로컬 스토리를 읽어서 저장된 이름이 있으면 출력
+        const saveUser = localStorage.getItem("name");
+        if (savedUser) {
+            result.textContent = savedUser;
+        };
+
+        button.addEventListener("click", () => p.textContent = input.value);
+            // 캐싱 : 임시저장소에 데이터를 저장
+            localStorage.setItem("name", input.value);
+            result.textContent = input.value;
+
+        // 리셋 버튼을 누르면 이름 리셋
+        resetButton.addEventListener("click", ()=> {
+            localStorage.removeItem("name");
+        });
+    </script>
+</body>
+</html>
+<!-- 
+1. storage API 는 값으로 문자열만 허용한다.
+다른 타입의 값을 
+저장 : JSON.stringify()
+출력 : parse()
+-->

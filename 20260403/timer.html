@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Timer API</h1>
+    <button id="start">카운트다운 시작</button>
+    <p id="time"></p>
+
+    <script>
+/* setTimeout(함수,시간ms):정해진 시간이 지난 뒤 함수가 한번 실행
+        function alertTimeout(){
+            alert("타임아웃 종료되었습니다.")
+        }
+        setTimeout(alertTimeout, 3000) //3s = 3000ms
+
+        // 함수표현식으로해보기
+        setTimeout(function() {
+            alert("타임아웃이 종료되었습니다.");
+        }, 3000);
+
+        //화살표함수로 해보기
+        setTimeout(() => alert("타임아웃이 종료되었습니다."), 3000);
+*/
+
+
+/* setInterval(함수, 시간ms) : 정해진 시간마다 함수를 반복실행 
+        setInterval(() => alert("3초가 경과되었습니다."), 3000);
+*/
+
+/*타이머*/
+        const startBtn = document.querySelector("#start"); // 버튼 가져오기
+        const timeEl = document.querySelector("#time"); // 시간보여줄자리 가져오기
+
+        let timeLeft = 10;
+        let timerId = null; //초기화
+
+        startBtn.addEventListener("click",() => { // 버튼에 리스너달기
+            if (timerId !== null) return; //이미 작동중인 타이머가 있으면 종료 -> 새로운 실행안됨
+            startBtn.disabled = true;
+            timeEl.textContent = timeLeft;
+
+            timerId = setInterval(()=> { //1초마다 timeLeft를 1씩 줄이고, 화면에 변경된 값을 출력
+                timeLeft--;
+                if (timeLeft === 0 ) {
+                    timeEl.textContent = "타이머 종료";
+                    clearInterval(timerId); // 타이머 멈추는함수
+                    timeLeft = 10;
+                    timerId = null;
+                    startBtn.disabled = false;
+                } else {
+                    timeEl.textContent = timeLeft;
+                };
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
