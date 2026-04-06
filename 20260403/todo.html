@@ -34,9 +34,49 @@
         const CACHE_KEY = "todos";
 
         let todos = [];
-        const savedTodos = localStorage.getItem("CACHE_KEY")
+        const savedTodos = localStorage.getItem(CACHE_KEY)
         if (savedTodos) {
             todos = JSON.parse(savedTodos);
+            renderTodos();
+        };
+
+        function createTodoElement(text) {
+            const li = document.createElement("li");
+            li.className = "list-group-item d-flex justify-content-between align-items-center";
+            li.textContent = text;
+            return li;
+        }
+
+        // renderTodos : 캐싱된 todos 를 화면에 그리기
+        function renderTodos() {
+            todoList.innerHTML = "";
+
+            for (const [index, todo] of todos.entries()) {
+                const li = createTodoElement(todo);
+                // const li = document.createElement("li");
+                // li.className = "list-group-item d-flex justify-content-between align-items-center";
+                // li.textContent = todo;
+
+                const btn = document.createElement("button");
+                btn.className = "btn btn-sm btn-danger";
+                btn.textContent = "삭제";
+                btn.addEventListener("click", ()=> deleteTodo(index));
+
+                li.appendChild(btn)
+                todoList.appendChild(li);
+            };
+        };
+
+        // deleteTodo : 완료된 todo 삭제
+        function deleteTodo(index) {
+            todos.splice(index, 1);
+            saveTodos();
+            renderTodos();
+        };
+
+        // Todos 저장(변경된 데이터를 로컬 스토리지에도 반영)
+        function saveTodos() {
+            localStorage.setItem(CACHE_KEY, JSON.stringify(todos));
         };
 
         // Todo 추가
@@ -44,21 +84,22 @@
             const text = todoInput.value.trim();
             if (text === "") {
                 alert("할 일을 입력하세요!");
+                return;
             }
-            
-            todos.push(text) // 목록에 append 함
-            localStorage.setItem(CACHE_KEY, JSON.stringify(todos));
 
-            const li = document.createElement("li");
-            li.className = "list-group-item d-flex justify-content-between align-items-center";
-            li.textContent = text;
-            todoList.appendChild(li);
+            todoInput.value = "";
+
+            todos.push(text) // 목록에 append 함
+            saveTodos();
+            renderTodos();
         };
 
         addBtn.addEventListener("click", addTodo);
+        todoInput.addEventListener("keyup", (e) => { /* e 적으면 이벤트 정보를 가져옴*/
+            // e.key 어떤키를 눌렀는지 정보를 가져온다
+            if (e.key === "Enter") addTodo();
+        });
 
-        // 캐싱된 todos 를 화면에 그리기
-        // 완료된 todo 삭제
     </script>
 </body>
 </html>
